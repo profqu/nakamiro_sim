@@ -1,0 +1,114 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      alpha.water;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];//kg m s K mol A cd
+
+internalField   uniform 0;//initially air in the entire domain - we will change that with setFields!
+
+boundaryField
+{
+
+	inlet1_air
+	{
+		 type            fixedValue;
+        value           uniform 0;
+	}
+    inlet1_water
+    {
+        type            fixedValue;
+		value	 	uniform 1;//only water enters the domain
+    }
+
+	inlet2_water
+    {
+        type            fixedValue;
+		value	 	uniform 1;//only water enters the domain
+    }
+
+	inlet2_air
+	{
+		 type            fixedValue;
+        value           uniform 0;
+	}
+    outlet
+    {
+//    This boundary condition provides a generic outflow condition, with
+//    specified inflow for the case of return flow.
+//    The mode of operation is determined by the sign of the flux across the
+//    patch faces.
+         type            zeroGradient;
+        
+    }
+
+    concrete_wall
+    {
+        type            zeroGradient;//BC is Neumann BC
+    }
+
+	earth_wall
+    {
+        type            zeroGradient;//BC is Neumann BC
+    }
+
+	earth_wallSmall
+    {
+        type            zeroGradient;//BC is Neumann BC
+    }
+	
+
+    concrete_bottom
+    {
+        type            zeroGradient;//BC is Neumann BC
+    }
+
+	earth_bottom
+    {
+        type            zeroGradient;//BC is Neumann BC
+    }
+
+/*
+
+atmosphere1
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+        
+
+    }
+
+	atmosphere2
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+        
+
+    }
+*/
+
+atmosphere
+    {
+       type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0; 
+        
+
+    }
+
+	
+}
+// ************************************************************************* //

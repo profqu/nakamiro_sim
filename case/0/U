@@ -1,0 +1,93 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];//kg m s K mol A cd
+
+internalField   uniform (0 0 0);//Initially the velocity is (0 0 0) m/s
+
+boundaryField
+{
+
+	inlet1_air
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+
+    inlet1_water
+    {
+        type            fixedValue;
+	value		uniform (1 0 0);//fixed inlet velocity
+    }
+
+	inlet2_air
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+	inlet2_water
+    {
+        type            fixedValue;
+	value		uniform (1 0 0);//fixed inlet velocity
+    }
+
+    outlet
+    {
+//    This velocity inlet/outlet boundary condition is applied to pressure
+//    boundaries where the pressure is specified.  A zero-gradient condition is
+//    applied for outflow (as defined by the flux); for inflow, the velocity is
+//    obtained from the patch-face normal component of the internal-cell value.
+//    The tangential patch velocity can be optionally specified.
+        type            zeroGradient;
+
+    }
+
+    concrete_wall
+    {
+        type            noSlip;//no slip along the walls - replaces fixedValue with uniform (0 0 0)
+    }
+
+	earth_wall
+    {
+        type            noSlip;//no slip along the walls - replaces fixedValue with uniform (0 0 0)
+    }
+
+	earth_wallSmall
+    {
+        type            noSlip;//no slip along the walls - replaces fixedValue with uniform (0 0 0)
+    }
+    
+	concrete_bottom
+    {
+        type            noSlip;//no slip along the bottom - replaces fixedValue with uniform (0 0 0)
+    }
+	
+	earth_bottom
+    {
+        type            noSlip;//no slip along the bottom - replaces fixedValue with uniform (0 0 0)
+    }
+	atmosphere
+	{
+	  	type            pressureInletOutletVelocity;  //used for atmospheric acting constant
+        value           uniform (1 0 0);
+	}
+
+	
+}
+
+
+// ************************************************************************* //

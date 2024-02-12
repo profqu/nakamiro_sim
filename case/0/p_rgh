@@ -1,0 +1,106 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];//kg m s K mol A cd
+
+internalField   uniform 0;//initially atmospheric pressure in the entire domain
+
+boundaryField
+{
+//    This boundary condition sets the pressure gradient to the provided value
+//    such that the flux on the boundary is that specified by the velocity
+//    boundary condition. gradient() = 0.0;
+    
+	inlet1_air
+    {
+        type            fixedFluxPressure;
+    }
+
+	inlet1_water
+    {
+        type            fixedFluxPressure;
+
+    }
+
+	inlet2_air
+    {
+        type            fixedFluxPressure;
+
+    }
+	
+	inlet2_water
+    {
+        type            fixedFluxPressure;
+
+    }
+
+    outlet
+    {
+//    This boundary condition provides a total pressure condition.
+//    Incompressible: p_patch = p_0 - 0.5 |U|^2
+        //type            fixedFluxPressure;
+        //value           uniform 0;
+	type            zeroGradient;
+
+    }
+
+    concrete_wall
+    {
+        type            fixedFluxPressure;
+
+    }
+
+	earth_wall
+    {
+        type            fixedFluxPressure;
+
+    }
+
+	earth_wallSmall
+    {
+        type            fixedFluxPressure;
+
+    }
+
+
+
+    concrete_bottom
+    {
+        type            fixedFluxPressure;
+
+    }
+
+	earth_bottom
+    {
+        type            fixedFluxPressure;
+
+    }
+
+	atmosphere
+    {
+        type            totalPressure;
+        p0	         uniform 0;
+		U		U;
+		phi		phi;
+		rho		rho;
+		gamma		1;
+		value		uniform 0;
+		}
+
+	
+}
+
+// ************************************************************************* //
